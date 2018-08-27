@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     ListView lv;
     String[] items;
-
+    String dummy;
     private static final int MY_PERMISSION_REQUEST = 1;
 
     @Override
