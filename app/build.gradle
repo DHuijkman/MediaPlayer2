@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.huijkman.duco.mediaplayer2"
+        applicationId "com.desktop.duco.mediaplayer2"
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 1

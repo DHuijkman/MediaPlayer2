@@ -1,4 +1,4 @@
-package com.huijkman.duco.mediaplayer2;
+package com.desktop.duco.mediaplayer2;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

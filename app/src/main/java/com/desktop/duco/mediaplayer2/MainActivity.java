@@ -1,4 +1,4 @@
-package com.huijkman.duco.mediaplayer2;
+package com.desktop.duco.mediaplayer2;
 
 import android.Manifest;
 import android.content.Intent;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     ListView lv;
     String[] items;
-    String dummy;
+
     private static final int MY_PERMISSION_REQUEST = 1;
 
     @Override

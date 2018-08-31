@@ -1,4 +1,4 @@
-package com.huijkman.duco.mediaplayer2;
+package com.desktop.duco.mediaplayer2;
 
 import org.junit.Test;
 
