@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     ListView lv;
     String[] items;
-
+    Intent playerActivity;
     private static final int MY_PERMISSION_REQUEST = 1;
 
     @Override
@@ -66,8 +66,15 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //start new activity (the song control screen where you can:
                 // fastforward/backward,play/pause,control seekbar,skip to previous or next song
-                startActivity(new Intent(getApplicationContext(),
-                        Player.class).putExtra("pos",position).putExtra("songlist",mySongs));
+//                if(playerActivity != null){
+//                    Player.getInstance().finish();
+//                    System.out.println("wtf is this shit");
+//
+//                }
+                playerActivity = new Intent(getApplicationContext(),
+                        Player.class).putExtra("pos",position).putExtra("songlist",mySongs);
+                //playerActivity.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                startActivity(playerActivity);
             }
         });
     }

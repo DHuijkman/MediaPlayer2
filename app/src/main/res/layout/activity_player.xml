@@ -55,5 +55,41 @@
         android:layout_toEndOf="@+id/btFF"
         app:srcCompat="@android:drawable/ic_media_next" />
 
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+    <ImageView
+        android:id="@+id/btReplay"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="161dp"
+        app:srcCompat="@android:drawable/ic_menu_rotate" />
+
+    <TextView
+        android:id="@+id/tvRT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btReplay"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="12dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btReplay"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="12dp"
+        android:text="TextView" />
+
 
 </RelativeLayout>
