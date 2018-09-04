@@ -128,36 +128,12 @@ public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> 
         @Override
         public void bindView(SimpleItem item, List<Object> payloads) {
             title.setText(item.songTitle);
-
-            Paint textPaint = title.getPaint();
-            String text = title.getText().toString();
-            int width = Math.round(textPaint.measureText(text));
-            ViewGroup.LayoutParams params = title.getLayoutParams();
-            params.width = width;
-            title.setLayoutParams(params);
-
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            Activity activity = (Activity) this.itemView.getContext();
-            if(activity != null) {
-                activity.getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
-            }
-            int screenWidth = displayMetrics.widthPixels;
-
-            TranslateAnimation slide = new TranslateAnimation(0,-width,0,0);
-            slide.setDuration(20000);
-            slide.setRepeatCount(Animation.INFINITE);
-            slide.setRepeatMode(Animation.RESTART);
-            slide.setInterpolator(new LinearInterpolator());
-            if (item.shouldAnimate){
-                title.startAnimation(slide);
-            }
-
+            title.setSelected(item.shouldAnimate);
         }
 
         @Override
         public void unbindView(SimpleItem item) {
-            title.clearAnimation();
-
+            title.setSelected(false);
         }
     }
 }

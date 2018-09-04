@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -30,7 +31,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SimpleItem.SimpleItemClickDelegate {
     private static final int MY_READ_REQUEST = 1;
-    private static final int MY_WRITE_REQUEST = 2;
     ListView lv;
     RecyclerView recyclerView;
     ImageView optionDrop;
@@ -59,22 +59,14 @@ public class MainActivity extends AppCompatActivity implements SimpleItem.Simple
 
         //pop up a permission request if needed if not continue running the the rest of the app
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)){
+                ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) &&
+                    ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
                 ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_READ_REQUEST);
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_READ_REQUEST);
             }else {
                 ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_READ_REQUEST);
-            }
-            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_WRITE_REQUEST);
-            }else {
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_WRITE_REQUEST);
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_READ_REQUEST);
             }
         }else {
             runApp();
@@ -129,10 +121,10 @@ public class MainActivity extends AppCompatActivity implements SimpleItem.Simple
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode){
             case MY_READ_REQUEST: {
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                   if(ContextCompat.checkSelfPermission(MainActivity.this,
-                           Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                       toast("Permission granted!");
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                   if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                           ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                       toast("Permissions granted!");
                        runApp();
                    }
                 }else {
@@ -185,6 +177,12 @@ public class MainActivity extends AppCompatActivity implements SimpleItem.Simple
                         //songFiles.get(position).delete();
                         break;
                     case R.id.share:
+                        String sharePath = songFiles.get(position).getPath();
+                        Uri uri = Uri.parse(sharePath);
+                        Intent share = new Intent(Intent.ACTION_SEND);
+                        share.setType("audio/*");
+                        share.putExtra(Intent.EXTRA_STREAM, uri);
+                        startActivity(Intent.createChooser(share, "Share Sound File"));
                         break;
                 }
 
@@ -202,11 +200,15 @@ public class MainActivity extends AppCompatActivity implements SimpleItem.Simple
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
-                        String path = songFiles.get(i).getPath();
-                        adapter.remove(i);
-                        Toast.makeText(getBaseContext(), "deleted: " + name ,
-                                Toast.LENGTH_LONG).show();
-                        //runApp();
+                        boolean b = songFiles.get(i).delete();
+                        if(b){
+                            adapter.remove(i);
+                            Toast.makeText(getBaseContext(), "deleted: " + name ,
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getBaseContext()," failed",Toast.LENGTH_LONG).show();
+                        }
+
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
