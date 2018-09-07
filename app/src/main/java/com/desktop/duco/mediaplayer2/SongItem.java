@@ -1,17 +1,9 @@
 package com.desktop.duco.mediaplayer2;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,22 +13,32 @@ import com.mikepenz.fastadapter.listeners.ClickEventHook;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> {
+public class SongItem extends AbstractItem<SongItem, SongItem.ViewHolder> {
 
     public interface SimpleItemClickDelegate {
-        void onSimpleItemClick(final SimpleItem simpleItem, View v);
-        void onOptionClick(final SimpleItem simpleItem, View v);
+        void onSimpleItemClick(final SongItem songItem, View v);
+        void onOptionClick(final SongItem songItem, View v);
     }
     public Boolean shouldAnimate = false;
+    public File songFile;
     public String songTitle;
 
 
-    public SimpleItem(String songTitle) {
-        this.songTitle = songTitle;
+    public SongItem(File songFile) {
+        this.songFile = songFile;
+        songTitle = songFile.getName().replace(".mp3","");
     }
 
+    public File getSongFile() {
+        return songFile;
+    }
+
+    public String getSongTitle() {
+        return songTitle;
+    }
 
     //The unique ID for this type of item
     @Override
@@ -55,7 +57,7 @@ public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> 
         return new ViewHolder(v);
     }
 
-    public static class ClickDelegate<T extends SimpleItemClickDelegate> extends ClickEventHook<SimpleItem> {
+    public static class ClickDelegate<T extends SimpleItemClickDelegate> extends ClickEventHook<SongItem> {
         private WeakReference<T> context;
 
         public ClickDelegate(WeakReference<T> context) {
@@ -73,7 +75,7 @@ public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> 
         }
 
         @Override
-        public void onClick(View v, int position, FastAdapter<SimpleItem> fastAdapter, SimpleItem item) {
+        public void onClick(View v, int position, FastAdapter<SongItem> fastAdapter, SongItem item) {
             if(context.get() == null)
                 return;
 
@@ -81,7 +83,7 @@ public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> 
         }
     }
 
-    public static class OptionClickDelegate<T extends SimpleItemClickDelegate> extends ClickEventHook<SimpleItem> {
+    public static class OptionClickDelegate<T extends SimpleItemClickDelegate> extends ClickEventHook<SongItem> {
         private WeakReference<T> context;
 
         public OptionClickDelegate(WeakReference<T> context) {
@@ -99,7 +101,7 @@ public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> 
         }
 
         @Override
-        public void onClick(View v, int position, FastAdapter<SimpleItem> fastAdapter, SimpleItem item) {
+        public void onClick(View v, int position, FastAdapter<SongItem> fastAdapter, SongItem item) {
             if(context.get() == null)
                 return;
 
@@ -111,7 +113,7 @@ public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> 
     /**
      * our ViewHolder
      */
-    public static class ViewHolder extends FastAdapter.ViewHolder<SimpleItem> {
+    public static class ViewHolder extends FastAdapter.ViewHolder<SongItem> {
         protected ImageView ivPlayingCurrently;
         protected ImageView ivOptions;
         protected TextView title;
@@ -126,13 +128,13 @@ public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> 
         }
 
         @Override
-        public void bindView(SimpleItem item, List<Object> payloads) {
+        public void bindView(SongItem item, List<Object> payloads) {
             title.setText(item.songTitle);
             title.setSelected(item.shouldAnimate);
         }
 
         @Override
-        public void unbindView(SimpleItem item) {
+        public void unbindView(SongItem item) {
             title.setSelected(false);
         }
     }

@@ -194,7 +194,7 @@ public class Player extends AppCompatActivity implements View.OnClickListener{
                 displayTime(max);
                 currentPosition = 0;
                 totalDuration = max;
-                //update play button
+                //update  button
                 btPlay.setImageResource(android.R.drawable.ic_media_pause);
                 break;
             case R.id.btReplay:
@@ -232,7 +232,7 @@ public class Player extends AppCompatActivity implements View.OnClickListener{
         displayTime(max);
         currentPosition = 0;
         totalDuration = max;
-        //update play button
+        //update  button
         btPlay.setImageResource(android.R.drawable.ic_media_pause);
     }
     public void displayTime(int maxTime){
