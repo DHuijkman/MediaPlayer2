@@ -24,10 +24,8 @@ import com.mikepenz.fastadapter.listeners.EventHook;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
 
-public class SimpleFragment extends Fragment implements SongItem.SimpleItemClickDelegate{
+public class MusicListFragment extends Fragment implements SongItem.SimpleItemClickDelegate,BackgroundPlayer.SetAdapterDelegate{
 
     RecyclerView recyclerView;
     ImageView optionDrop;
@@ -35,7 +33,7 @@ public class SimpleFragment extends Fragment implements SongItem.SimpleItemClick
 
     SongItem lastClicked;
     Context mContext;
-    Intent playerActivity, volumeSettings;
+    Intent volumeSettings;
 
     @Override
     public void onAttach(Context context) {
@@ -57,10 +55,10 @@ public class SimpleFragment extends Fragment implements SongItem.SimpleItemClick
         adapter = new FastItemAdapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.withEventHook((EventHook) new SongItem.ClickDelegate<>(new WeakReference<SimpleFragment>(this)));
-        adapter.withEventHook((EventHook) new SongItem.OptionClickDelegate<>(new WeakReference<SimpleFragment>(this)));
+        adapter.withEventHook((EventHook) new SongItem.ClickDelegate<>(new WeakReference<MusicListFragment>(this)));
+        adapter.withEventHook((EventHook) new SongItem.OptionClickDelegate<>(new WeakReference<MusicListFragment>(this)));
         runApp();
-
+        BackgroundPlayer.getInstance().registerAdapterDelegate(this);
         return v;
     }
 
@@ -155,4 +153,8 @@ public class SimpleFragment extends Fragment implements SongItem.SimpleItemClick
                 .setNegativeButton("No", dialogClickListener).show();
     }
 
+    @Override
+    public void onUpdateAdapter(SongItem songItem, int i) {
+        adapter.set(i,songItem);
+    }
 }

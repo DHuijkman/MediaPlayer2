@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class ControlerFragment extends Fragment implements BackgroundPlayer.UpdateDelegate, View.OnClickListener {
+public class ControllerFragment extends Fragment implements BackgroundPlayer.UpdateDelegate, View.OnClickListener {
 
     private Context mContext;
 

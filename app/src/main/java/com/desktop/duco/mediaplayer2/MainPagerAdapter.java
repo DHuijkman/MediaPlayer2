@@ -20,9 +20,9 @@ class MainPagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabSt
         super(activity.getSupportFragmentManager());
         this.activity = activity;
 
-        fragments.add(SimpleFragment.instantiate(activity, SimpleFragment.class.getName()));
+        fragments.add(MusicListFragment.instantiate(activity, MusicListFragment.class.getName()));
 
-        fragments.add(ControlerFragment.instantiate(activity,ControlerFragment.class.getName()));
+        fragments.add(ControllerFragment.instantiate(activity,ControllerFragment.class.getName()));
     }
 
     @Override

@@ -9,17 +9,37 @@ import android.os.Environment;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 public class BackgroundPlayer {
+
+
+
+    private static BackgroundPlayer ourInstance;
+    private volatile Boolean stop = false;
+    private volatile int currentPosition;
+    private int position = 0;
+    private int totalDuration;
+    private MediaPlayer mp;
+    private Context mContext;
+    private Uri u;
+    private Boolean replay = false;
+    private String progressTime,maxTime;
+    private String songName;
+
+    private ArrayList<UpdateDelegate> delegates = new ArrayList<>();
+    private ArrayList<SetAdapterDelegate> adapterDelegates = new ArrayList<>();
+    private List<SongItem> songItems;
 
     public void registerDelegate(UpdateDelegate delegate) {
         if(!delegates.contains(delegate)){
             delegates.add(delegate);
         }
     }
-
-
+    public void registerAdapterDelegate(SetAdapterDelegate setAdapterDelegate){
+        if(!adapterDelegates.contains(setAdapterDelegate)){
+            adapterDelegates.add(setAdapterDelegate);
+        }
+    }
 
     public interface UpdateDelegate {
         void onUpdateTimer(int time,String etTime);
@@ -28,28 +48,11 @@ public class BackgroundPlayer {
         void onReplayImgUpdate(int idReplay);
     }
 
-    private static BackgroundPlayer ourInstance;
-    private Context mContext;
-
-    static MediaPlayer mp;
-
-    private Uri u;
-    private Thread updateSeekBar;
-    private Boolean replay = false;
-    private volatile Boolean stop = false;
-    private String progressTime,maxTime;
-    private String songName;
-    private int position = 0;
-    private int timeMin, max, totalDuration;
-    private volatile int currentPosition;
-    private ArrayList<UpdateDelegate> delegates = new ArrayList<>();
-
-
-    private List<SongItem> songItems = new ArrayList<>();
-
+    public interface SetAdapterDelegate {
+        void onUpdateAdapter(SongItem songItem,int i);
+    }
     private BackgroundPlayer() {
         songItems = updateSongList();
-
     }
 
     public static BackgroundPlayer getInstance() {
@@ -64,6 +67,7 @@ public class BackgroundPlayer {
         this.mContext = mContext;
         startSong(songItems.get(position).getSongFile(),position);
         mediaControl();
+        setPlay();
     }
 
     public List<SongItem> updateSongList() {
@@ -72,40 +76,30 @@ public class BackgroundPlayer {
     }
 
     private List<SongItem> findSongs(File root) {
-
-        //make new array which will hold return value(the songs that have been found)
         ArrayList<SongItem> al = new ArrayList<>();
-        //make array with type File and fill it with the files from the directory that has been giving
         File[] files = root.listFiles();
-        //iterate through files and recursively look through all(including subdirectories) files
         for (File singleFile : files) {
-            //check subdirectory as long as its not a hidden file
             if (singleFile.isDirectory() && !singleFile.isHidden()) {
                 al.addAll(findSongs(singleFile));
             } else {
-                //if the name of current file ends with .mp3 it gets added note that i also made it
-                //so that files starting with a '.' got rejected because of certain files on my phone
-                //its comletely optional you for example add another requirement saying
-                // 'singleFile.endsWith(".wav")' to let diffrent kind of extensions also get added
+
                 if (singleFile.getName().endsWith(".mp3") && !singleFile.getName().startsWith(".")) {
                     al.add(new SongItem(singleFile));
                 }
             }
         }
-
         return al;
     }
 
     private void mediaControl() {
-        updateSeekBar = new Thread() {
+        Thread updateSeekBar = new Thread() {
             @Override
             public void run() {
+                Activity a = (Activity) mContext;
                 while (currentPosition < totalDuration) {
                     try {
-                        if(!stop) {
+                        if (!stop) {
                             currentPosition = mp.getCurrentPosition();
-
-                            Activity a = (Activity) mContext;
                             if (a != null) {
                                 a.runOnUiThread(new Runnable() {
                                     @Override
@@ -116,8 +110,6 @@ public class BackgroundPlayer {
                                     }
                                 });
                             }
-
-
                             if (currentPosition >= totalDuration && !replay) {
                                 if (a != null) {
                                     a.runOnUiThread(new Runnable() {
@@ -127,26 +119,17 @@ public class BackgroundPlayer {
                                         }
                                     });
                                 }
-
-
-
                             } else if (currentPosition >= totalDuration && replay) {
-
                                 currentPosition = 0;
                             }
-
                             sleep(1000);
                         }
-
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
                 }
-
             }
         };
-
         updateSeekBar.start();
     }
 
@@ -156,7 +139,6 @@ public class BackgroundPlayer {
             mp.stop();
             mp.release();
         }
-
         this.position = position;
         u = Uri.parse(song.toString());
         mp = MediaPlayer.create(mContext, u);
@@ -167,13 +149,11 @@ public class BackgroundPlayer {
         totalDuration = mp.getDuration();
         currentPosition = 0;
         songName = song.getName().replace(".mp3","");
-
         for(UpdateDelegate delegate : delegates){
             delegate.onNewSong(currentPosition, totalDuration ,elapsedTime(), displayTime(),songName);
             delegate.onPlayImgUpdate(android.R.drawable.ic_media_pause);
         }
         stop = false;
-
     }
 
     private String displayTime(){
@@ -190,7 +170,11 @@ public class BackgroundPlayer {
     }
 
     public void setNext(){
+        songItems.get(position).shouldAnimate = false;
+        updateAdapter(songItems.get(position), position);
         position = (position+1)%songItems.size();
+        songItems.get(position).shouldAnimate = true;
+        updateAdapter(songItems.get(position), position);
         startSong(songItems.get(position).getSongFile(),position);
     }
 
@@ -244,5 +228,11 @@ public class BackgroundPlayer {
     public int[] getStartIData(){
         int[] ints = {currentPosition,totalDuration};
         return ints;
+    }
+
+    public void updateAdapter(SongItem songItem, int pos){
+        for(SetAdapterDelegate setAdapterDelegate : adapterDelegates){
+            setAdapterDelegate.onUpdateAdapter(songItem, pos);
+        }
     }
 }
