@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         tabStrip.setShouldExpand(true);
         tabStrip.setViewPager(pager);
 
-        BackgroundPlayer.getInstance().setmContext(this);
+        BackgroundPlayer.getInstance().setmContext(this, this, android.os.Process.myPid());
 
     }
 

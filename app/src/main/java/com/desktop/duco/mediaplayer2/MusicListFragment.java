@@ -24,8 +24,9 @@ import com.mikepenz.fastadapter.listeners.EventHook;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.List;
 
-public class MusicListFragment extends Fragment implements SongItem.SimpleItemClickDelegate,BackgroundPlayer.SetAdapterDelegate{
+public class MusicListFragment extends Fragment implements SongItem.SimpleItemClickDelegate,BackgroundPlayer.SetAdapterDelegate , BackgroundPlayer.MissingDataDelegate{
 
     RecyclerView recyclerView;
     ImageView optionDrop;
@@ -37,8 +38,13 @@ public class MusicListFragment extends Fragment implements SongItem.SimpleItemCl
 
     @Override
     public void onAttach(Context context) {
+        if(isAdded())
+        {
+            return;
+        }
         super.onAttach(context);
         this.mContext = context;
+        BackgroundPlayer.getInstance().registerMissingDataDelegate(this);
     }
 
 
@@ -59,14 +65,14 @@ public class MusicListFragment extends Fragment implements SongItem.SimpleItemCl
         adapter.withEventHook((EventHook) new SongItem.OptionClickDelegate<>(new WeakReference<MusicListFragment>(this)));
         runApp();
         BackgroundPlayer.getInstance().registerAdapterDelegate(this);
+
         return v;
     }
 
 
 
     public void runApp(){
-
-        adapter.setNewList(BackgroundPlayer.getInstance().updateSongList());
+        BackgroundPlayer.getInstance().updateSongList();
     }
 
 
@@ -134,6 +140,8 @@ public class MusicListFragment extends Fragment implements SongItem.SimpleItemCl
                         boolean b = song.delete();
                         if(b){
                             adapter.remove(i);
+                            BackgroundPlayer.getInstance().updateSongList();
+
                             Toast.makeText(mContext, "deleted: " + name ,
                                     Toast.LENGTH_LONG).show();
                         } else {
@@ -156,5 +164,10 @@ public class MusicListFragment extends Fragment implements SongItem.SimpleItemCl
     @Override
     public void onUpdateAdapter(SongItem songItem, int i) {
         adapter.set(i,songItem);
+    }
+
+    @Override
+    public void onFindSongRequest(List<SongItem> item) {
+        adapter.setNewList(item);
     }
 }

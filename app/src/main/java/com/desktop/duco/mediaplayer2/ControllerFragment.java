@@ -24,8 +24,13 @@ public class ControllerFragment extends Fragment implements BackgroundPlayer.Upd
 
     @Override
     public void onAttach(Context context) {
+        if(isAdded())
+        {
+            return;
+        }
         super.onAttach(context);
         this.mContext = context;
+        BackgroundPlayer.getInstance().registerDelegate(this);
     }
 
 
@@ -86,8 +91,13 @@ public class ControllerFragment extends Fragment implements BackgroundPlayer.Upd
         });
 
 
-        BackgroundPlayer.getInstance().registerDelegate(this);
+
         return v;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
 

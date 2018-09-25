@@ -1,14 +1,19 @@
 package com.desktop.duco.mediaplayer2;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Thread.sleep;
 
 public class BackgroundPlayer {
 
@@ -28,7 +33,11 @@ public class BackgroundPlayer {
 
     private ArrayList<UpdateDelegate> delegates = new ArrayList<>();
     private ArrayList<SetAdapterDelegate> adapterDelegates = new ArrayList<>();
+    private ArrayList<MissingDataDelegate> missingDataDelegates = new ArrayList<>();
+
     private List<SongItem> songItems;
+
+    private Activity activity;
 
     public void registerDelegate(UpdateDelegate delegate) {
         if(!delegates.contains(delegate)){
@@ -41,6 +50,12 @@ public class BackgroundPlayer {
         }
     }
 
+    public void registerMissingDataDelegate(MissingDataDelegate missingDataDelegate){
+        if(!missingDataDelegates.contains(missingDataDelegate)){
+            missingDataDelegates.add(missingDataDelegate);
+        }
+    }
+
     public interface UpdateDelegate {
         void onUpdateTimer(int time,String etTime);
         void onNewSong(int startTime, int endTime,String startTimer, String duration , String title);
@@ -48,11 +63,16 @@ public class BackgroundPlayer {
         void onReplayImgUpdate(int idReplay);
     }
 
+    public interface MissingDataDelegate {
+        void onFindSongRequest(List<SongItem> item);
+    }
+
     public interface SetAdapterDelegate {
         void onUpdateAdapter(SongItem songItem,int i);
     }
+
     private BackgroundPlayer() {
-        songItems = updateSongList();
+
     }
 
     public static BackgroundPlayer getInstance() {
@@ -63,16 +83,48 @@ public class BackgroundPlayer {
 
     }
 
-    public void setmContext(Context mContext) {
+    public void setmContext(Context mContext, Activity a,final int pid) {
+        activity = a;
         this.mContext = mContext;
-        startSong(songItems.get(position).getSongFile(),position);
-        mediaControl();
-        setPlay();
+        songItems = findSongs(Environment.getExternalStorageDirectory());
+        if(songItems == null || songItems.isEmpty()){
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            activity.finish();
+                            android.os.Process.killProcess(pid);
+                            break;
+
+                    }
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setMessage("No songs found").setPositiveButton("ok", dialogClickListener)
+                    .create().show();
+
+        } else {
+
+            startSong(songItems.get(position).getSongFile(),position);
+            mediaControl();
+            setPlay();
+        }
+
     }
 
-    public List<SongItem> updateSongList() {
+    public void updateSongList() {
         songItems = findSongs(Environment.getExternalStorageDirectory());
-        return songItems;
+        if(songItems == null || songItems.isEmpty()){
+
+        } else {
+            for (MissingDataDelegate missingDataDelegate : missingDataDelegates) {
+                missingDataDelegate.onFindSongRequest(songItems);
+            }
+        }
+
+
+
     }
 
     private List<SongItem> findSongs(File root) {
@@ -88,6 +140,7 @@ public class BackgroundPlayer {
                 }
             }
         }
+
         return al;
     }
 
@@ -179,7 +232,11 @@ public class BackgroundPlayer {
     }
 
     public void setPrev(){
+        songItems.get(position).shouldAnimate = false;
+        updateAdapter(songItems.get(position), position);
         position = (position-1<0)? songItems.size() -1: position -1;
+        songItems.get(position).shouldAnimate = true;
+        updateAdapter(songItems.get(position), position);
         startSong(songItems.get(position).getSongFile(),position);
     }
 
