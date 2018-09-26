@@ -20,4 +20,4 @@ Some of its Functions are:
   
 More stuff might come in the future it just depends on how much time i have and if something fun pops up. 
 I wont say that the code is perfect. Im using this myself to learn more about designing apps
-but so far it works without bugs or crashing. Have fun with it .
+but so far it works without bugs or crashing. Have fun with it .//
