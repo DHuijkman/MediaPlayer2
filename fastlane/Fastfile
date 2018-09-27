@@ -1,3 +1,6 @@
 lane :tests do
-  gradle(task: "connectedAndroidTest")
+  gradle(
+    task: 'assemble'
+    build_type: 'Release'
+  )
 end
