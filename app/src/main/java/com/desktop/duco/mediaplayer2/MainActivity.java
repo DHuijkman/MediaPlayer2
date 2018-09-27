@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager pager;
     private MainPagerAdapter adapter;
     Button triggerList,triggerController;
-    
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
