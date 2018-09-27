@@ -34,7 +34,7 @@ public class NextSongUITest {
 
     @Rule
     public GrantPermissionRule writePermission = GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
+    //asdkjkbjbjk
     @Rule
     public GrantPermissionRule readPermission = GrantPermissionRule.grant(Manifest.permission.READ_EXTERNAL_STORAGE);
 
