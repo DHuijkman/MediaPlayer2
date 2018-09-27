@@ -59,7 +59,7 @@ public class NextSongUITest {
                 allOf(withId(R.id.pager),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(android.R.id.contet),
+                                        withId(android.R.id.content),
                                         0),
                                 0),
                         isDisplayed()));
