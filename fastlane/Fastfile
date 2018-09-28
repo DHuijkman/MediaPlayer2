@@ -2,5 +2,5 @@ before_all do
   sh("cd .. && ls && chmod a+x gradlew")
 end
 lane :tests do
-  gradle(task: 'connectedAndroidTest')
+  gradle(task: "test")
 end
