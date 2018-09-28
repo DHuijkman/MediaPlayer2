@@ -1,6 +1,6 @@
 lane :tests do
   before_all do
-    sh chmod a+x gradlew
+    sh(chmod a+x gradlew)
   end
   gradle(
     task: 'clean'
