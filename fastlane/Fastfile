@@ -1,5 +1,4 @@
 lane :tests do
-  sh("cd ..")
-  sh("ls")
+  sh("cd .. && ls")
   sh("chmod", "a+x", "gradlew")
 end
