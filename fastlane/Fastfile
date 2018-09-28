@@ -1,3 +1,7 @@
 lane :tests do
   sh("cd .. && ls && chmod a+x gradlew")
+  gradle(
+    task: 'assemble',
+    build_type: 'Release'
+  )
 end
