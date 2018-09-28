@@ -38,7 +38,7 @@ public class NoSongs {
             GrantPermissionRule.grant(
                     "android.permission.READ_EXTERNAL_STORAGE",
                     "android.permission.WRITE_EXTERNAL_STORAGE");
-//vsdsad
+
     @Test
     public void noSongs() {
         ViewInteraction appCompatButton = onView(
