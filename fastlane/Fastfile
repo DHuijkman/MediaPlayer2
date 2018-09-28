@@ -1,6 +1,3 @@
 lane :tests do
-  sh(chmod a+x gradlew)
-  gradle(
-    task: 'clean'
-  )
+  sh "bash chmod a+x gradlew"
 end
