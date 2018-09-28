@@ -1,8 +1,8 @@
 lane :tests do
-  # Adjust the `build_type` and `flavor` params as needed to build the right APK for your setup
+  before_all do
+    sh chmod a+x gradlew
+  end
   gradle(
     task: 'clean'
   )
-
-  # ...
 end
