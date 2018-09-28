@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.style.BackgroundColorSpan;
 import android.widget.Button;
 import android.widget.Toast;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
 
