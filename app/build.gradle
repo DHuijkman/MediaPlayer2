@@ -6,7 +6,21 @@ repositories {
 }
 
 android {
-
+    signingConfigs {
+        Rkey {
+            if(System.getenv()["CI"]){
+                storeFile file(System.getenv()["NC_KEYSTORE_PATH"])
+                storePassword System.getenv()["NC_KEYSTORE_PASSWORD"]
+                keyAlias System.getenv()["NC_KEY_ALIAS"]
+                keyPassword System.getenv()["NC_KEY_PASSWORD"]
+            } else {
+                keyAlias 'mpKey'
+                keyPassword 'Ducoh19!'
+                storeFile file('C:/Users/Duco/keystores/MpK.jks')
+                storePassword 'DucoBouw7'
+            }
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.desktop.duco.mediaplayer2"
@@ -21,6 +35,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.Rkey
         }
     }
 }
