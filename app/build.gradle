@@ -6,14 +6,7 @@ repositories {
 }
 
 android {
-    signingConfigs {
-        configR {
-            keyAlias 'mpKey'
-            keyPassword 'Ducoh19!'
-            storeFile file('C:/Users/Duco/keystores/MpK.jks')
-            storePassword 'DucoBouw7'
-        }
-    }
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.desktop.duco.mediaplayer2"
@@ -28,7 +21,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.configR
         }
     }
 }
