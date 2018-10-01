@@ -15,7 +15,7 @@ import io.fabric.sdk.android.Fabric;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-
+//asdfasda
 public class MainActivity extends AppCompatActivity {
     private static final int MY_READ_REQUEST = 1;
     private ViewPager pager;
