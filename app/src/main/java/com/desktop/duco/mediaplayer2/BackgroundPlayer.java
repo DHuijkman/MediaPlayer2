@@ -94,7 +94,7 @@ public class BackgroundPlayer {
                     switch (which){
                         case DialogInterface.BUTTON_POSITIVE:
                             activity.finish();
-                            
+
                             break;
 
                     }
