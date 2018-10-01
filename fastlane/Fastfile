@@ -1,9 +1,12 @@
 before_all do
   sh("cd .. && ls && chmod a+x gradlew")
+  slack(slack_url: "https://hooks.slack.com/services/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")
 end
 lane :tests do
   gradle(task: 'assemble', build_type: 'Debug')
   gradle(task: "connectedAndroidTest")
   gradle(task: 'assemble', build_type: 'Release')
   crashlytics(api_token: '6aba69f4130641237a2ae1131f9c56bff86d10bb', build_secret: 'e4d8e0101250165b60002253500f66fc3a49b0f6c48bd07d0f9fd2360a3bfdd7')
+  slack(message: "build succesfull",
+        succes: true)
 end
