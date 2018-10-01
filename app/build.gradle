@@ -21,7 +21,7 @@ android {
             }
         }
     }
-    //hcfhfyh
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.desktop.duco.mediaplayer2"
