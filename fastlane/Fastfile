@@ -3,4 +3,6 @@ before_all do
 end
 lane :tests do
   gradle(task: "connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.desktop.duco.mediaplayer2.NoSongs")
+  gradle(task: 'assemble', build_type: 'Release')
+  crashlytics(api_token: '6aba69f4130641237a2ae1131f9c56bff86d10bb', build_secret: 'e4d8e0101250165b60002253500f66fc3a49b0f6c48bd07d0f9fd2360a3bfdd7'
 end
