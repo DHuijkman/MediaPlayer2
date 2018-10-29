@@ -44,10 +44,9 @@ public class ScrollUITest {
     @Test
     public void clickItem(){
 
-        onView(withId(R.id.recycler_view))
+        onView(allOf(withId(R.id.recycler_view), isDisplayed()))
                 .perform(RecyclerViewActions
-                        .actionOnHolderItem(withHolder("Brigitte Kaandorp - Zwaar Leven (met tekst)"),click()))
-                .check(matches(isDisplayed()));
+                        .actionOnHolderItem(withHolder("Brigitte Kaandorp - Zwaar Leven (met tekst)"),click()));
 
         ViewInteraction viewPager = onView(
                 allOf(withId(R.id.pager),

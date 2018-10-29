@@ -25,8 +25,6 @@ public class SongItem extends AbstractItem<SongItem, SongItem.ViewHolder> {
     }
     public Boolean shouldAnimate = false;
     public File songFile;
-
-    @VisibleForTesting
     private String songTitle;
 
 

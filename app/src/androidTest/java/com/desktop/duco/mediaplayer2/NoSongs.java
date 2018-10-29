@@ -42,7 +42,7 @@ public class NoSongs {
     @Test
     public void noSongs() {
         ViewInteraction appCompatButton = onView(
-                allOf(withId(android.R.id.button1), withText("no"),
+                allOf(withId(android.R.id.button1), withText("ok"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
