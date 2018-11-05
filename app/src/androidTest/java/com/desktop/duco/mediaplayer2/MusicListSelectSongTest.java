@@ -7,6 +7,7 @@ import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.BoundedMatcher;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -41,18 +42,40 @@ public class MusicListSelectSongTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
+    @Rule
+    public GrantPermissionRule mGrantPermissionRule =
+            GrantPermissionRule.grant(
+                    "android.permission.READ_EXTERNAL_STORAGE",
+                    "android.permission.WRITE_EXTERNAL_STORAGE");
+
     @Test
     public void clickItem(){
-
         onView(allOf(withId(R.id.recycler_view), isDisplayed()))
                 .perform(RecyclerViewActions
-                        .actionOnHolderItem(withHolder("Sabaton - 40 1 (Lyrics English Deutsch)"),click()));
+                        .actionOnHolderItem(withHolder("Initial D - Deja Vu"),click()));
+
+//        try {
+//            sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         onView(allOf(withId(R.id.pager), isDisplayed())).perform(swipeLeft());
 
-        onView(allOf(withId(R.id.tvTitle), isDisplayed())).check(matches(withText("Sabaton - 40 1 (Lyrics English Deutsch)")));
+//        try {
+//            sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+        onView(allOf(withId(R.id.tvTitle), isDisplayed())).check(matches(withText("Initial D - Deja Vu")));
 
 
+//        try {
+//            sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public Matcher<RecyclerView.ViewHolder> withHolder(final String title){
@@ -60,7 +83,7 @@ public class MusicListSelectSongTest {
 
             @Override
             protected boolean matchesSafely(SongItem.ViewHolder item) {
-                return item.title.getText().equals(title);
+                return item.title.getText().toString().equals(title);
             }
 
             @Override
