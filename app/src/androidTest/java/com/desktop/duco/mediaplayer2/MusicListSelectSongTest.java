@@ -54,28 +54,28 @@ public class MusicListSelectSongTest {
                 .perform(RecyclerViewActions
                         .actionOnHolderItem(withHolder("Initial D - Deja Vu"),click()));
 
-//        try {
-//            sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         onView(allOf(withId(R.id.pager), isDisplayed())).perform(swipeLeft());
 
-//        try {
-//            sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         onView(allOf(withId(R.id.tvTitle), isDisplayed())).check(matches(withText("Initial D - Deja Vu")));
 
 
-//        try {
-//            sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public Matcher<RecyclerView.ViewHolder> withHolder(final String title){
