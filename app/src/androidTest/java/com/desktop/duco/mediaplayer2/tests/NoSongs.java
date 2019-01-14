@@ -1,4 +1,4 @@
-package com.desktop.duco.mediaplayer2;
+package com.desktop.duco.mediaplayer2.tests;
 
 
 import android.support.test.espresso.ViewInteraction;
@@ -9,6 +9,10 @@ import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+
+import com.desktop.duco.mediaplayer2.AbstractTest;
+import com.desktop.duco.mediaplayer2.MainActivity;
+import com.desktop.duco.mediaplayer2.util.Reset;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -26,21 +30,10 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
-@LargeTest
-@RunWith(AndroidJUnit4.class)
-public class NoSongs {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+public class NoSongs extends AbstractTest {
 
-    @Rule
-    public GrantPermissionRule mGrantPermissionRule =
-            GrantPermissionRule.grant(
-                    "android.permission.READ_EXTERNAL_STORAGE",
-                    "android.permission.WRITE_EXTERNAL_STORAGE");
-
-    @Test
-    public void noSongs() {
+    public void start() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(android.R.id.button1), withText("ok"),
                         childAtPosition(
@@ -49,6 +42,10 @@ public class NoSongs {
                                         0),
                                 3)));
         appCompatButton.perform(scrollTo(), click());
+    }
+
+    public void reset() {
+        Reset.reset();
     }
 
     private static Matcher<View> childAtPosition(

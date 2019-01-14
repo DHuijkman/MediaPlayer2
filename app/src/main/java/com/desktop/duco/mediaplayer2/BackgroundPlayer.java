@@ -7,7 +7,8 @@ import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
-import android.widget.Toast;
+
+import com.desktop.duco.mediaplayer2.tests.SongItem;
 
 import java.io.File;
 import java.util.ArrayList;

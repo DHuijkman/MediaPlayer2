@@ -33,11 +33,45 @@ android {
         testApplicationId "com.desktop.duco.mediaplayer2.androidtest"
     }
     buildTypes {
+        debug{
+            minifyEnabled false
+            boolean ranOnce = false
+            tasks.withType(Test) {
+                if (!ranOnce) {
+                    ranOnce = true
+                    systemProperties = System.properties
+                    if (systemProperties['selectedtest'] == null) {
+                        buildConfigField "String", "SELECTEDTEST", "\"\""
+                    } else {
+                        buildConfigField "String", "SELECTEDTEST", "\"" + systemProperties['selectedtest'] + "\""
+                    }
+                    if (systemProperties['multiplier'] == null) {
+                        buildConfigField "int", "MULTIPLIER", "1"
+                    } else {
+                        buildConfigField "int", "MULTIPLIER", systemProperties['multiplier']
+                    }
+                    if (systemProperties['showerrorfor'] == null) {
+                        buildConfigField "String", "SHOWERRORFOR", "\"ignored\""
+                    } else {
+                        buildConfigField "String", "SHOWERRORFOR", "\"" + systemProperties['showerrorfor'] + "\""
+                    }
+                    if (systemProperties['dialog'] == null) {
+                        buildConfigField "boolean", "DIALOG", "false"
+                    } else {
+                        buildConfigField "boolean", "DIALOG", systemProperties['dialog']
+                    }
+                }
+            }
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.Rkey
         }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
     }
 }
 

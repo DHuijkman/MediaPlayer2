@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:layout_alignParentStart="true" android:layout_centerVertical="true"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/divider3"
+        >
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp" android:layout_alignParentBottom="true"
+                android:id="@+id/test_error_result_text"
+                android:layout_marginBottom="54dp" android:textColor="@color/red"
+                android:textSize="18sp" android:padding="3dp"/>
+        </LinearLayout>
+    </ScrollView>
+    <TextView
+        android:text="Test results"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true" android:id="@+id/test_title" android:layout_marginTop="27dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" android:textStyle="bold|italic"
+        android:textAllCaps="true"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:layout_alignParentStart="true" android:layout_below="@+id/test_title"/>
+
+    <TextView
+        android:text="tests run:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_alignParentTop="true" android:id="@+id/test_run_title"
+        android:layout_marginTop="91dp" android:layout_toStartOf="@+id/test_title" android:textAllCaps="true"/>
+    <TextView
+        android:text="sets run:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_toEndOf="@+id/test_title"
+        android:layout_alignTop="@+id/test_run_title" android:id="@+id/sets_run_title" android:textAllCaps="true"/>
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_below="@+id/test_run_title"
+        android:id="@+id/test_run_value"
+        android:layout_alignStart="@+id/test_run_title" android:textStyle="bold|italic" android:textAllCaps="true"/>
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_below="@+id/test_run_title"
+        android:layout_alignEnd="@+id/sets_run_title" android:id="@+id/sets_run_value"
+        android:textStyle="bold|italic" android:textAllCaps="true"/>
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
+        android:id="@+id/tests_passed_bar"
+        android:layout_marginTop="251dp" android:layout_height="35dp"/>
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/tests_passed_bar" android:id="@+id/test_passed_percentage"
+        android:layout_marginTop="8dp"/>
+    <TextView
+        android:text="tests passed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_centerHorizontal="true"
+        android:layout_above="@+id/tests_passed_bar" android:id="@+id/test_passed_text"
+        android:layout_marginBottom="-251dp"
+        android:textAllCaps="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true" android:id="@+id/test_count_down" android:layout_marginTop="164dp"
+        android:textAllCaps="true" android:textStyle="bold"/>
+</RelativeLayout>
+
