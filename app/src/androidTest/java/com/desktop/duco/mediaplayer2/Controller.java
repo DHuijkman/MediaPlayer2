@@ -5,9 +5,9 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.desktop.duco.mediaplayer2.tests.MusicListSelectSongTest;
-import com.desktop.duco.mediaplayer2.tests.NextSongUITest;
-import com.desktop.duco.mediaplayer2.tests.NoSongs;
+import com.desktop.duco.mediaplayer2.demo.EmptyList;
+import com.desktop.duco.mediaplayer2.demo.NextPlay;
+import com.desktop.duco.mediaplayer2.demo.SelectSong;
 
 import org.junit.After;
 import org.junit.Before;
@@ -64,14 +64,14 @@ public class Controller {
             String[] comands = command.split(",");
             usedTests.addAll(Arrays.asList(comands));
         }
-        //uncomment this line if you want to manually add which test should be run (if you dont want to use gradle)
+        //uncomment this line if you want to manually add which test should be run (if you don't want to use gradle)
         //usedTests.add("contactsearchtest");
 
         Map<String, AbstractTest> tests = new HashMap<>();
 
-       // tests.put("musiclistselectsongtest", new MusicListSelectSongTest());
-        tests.put("nextsonguitest", new NextSongUITest());
-       // tests.put("nosongs", new NoSongs());
+        tests.put("selectsong", new SelectSong());
+        tests.put("nextplay", new NextPlay());
+        tests.put("nosongs", new EmptyList());
 
 
         int k = 0;

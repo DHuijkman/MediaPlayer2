@@ -8,7 +8,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 
-import com.desktop.duco.mediaplayer2.tests.SongItem;
+import com.desktop.duco.mediaplayer2.objects.SongItem;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.desktop.duco.mediaplayer2.tests;
+package com.desktop.duco.mediaplayer2.objects;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

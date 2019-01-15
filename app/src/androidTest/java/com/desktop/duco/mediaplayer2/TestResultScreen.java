@@ -35,13 +35,13 @@ public class TestResultScreen extends Fragment {
             v = inflater.inflate(R.layout.activity_test_result_screen,container, false);
 
 
-        TextView testsRun = v.findViewById(R.id.test_run_value);
-        TextView setsRun = v.findViewById(R.id.sets_run_value);
-        TextView testPassedText = v.findViewById(R.id.test_passed_text);
-        TextView testPassedPercentage = v.findViewById(R.id.test_passed_percentage);
+        TextView testsRun = v.findViewById(R.id.tests_run_amount);
+        TextView setsRun = v.findViewById(R.id.sets_run_amount);
+        TextView testPassedText = v.findViewById(R.id.tests_passed_text);
+        TextView testPassedPercentage = v.findViewById(R.id.progress_percentage);
         TextView errorMessage = v.findViewById(R.id.test_error_result_text);
         timer = v.findViewById(R.id.test_count_down);
-        ProgressBar testPassedBar = v.findViewById(R.id.tests_passed_bar);
+        ProgressBar testPassedBar = v.findViewById(R.id.progress_bar);
 
 
         testsRun.setText(String.valueOf(testsRunAmount));

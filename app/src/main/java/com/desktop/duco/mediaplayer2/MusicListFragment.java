@@ -19,7 +19,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 
-import com.desktop.duco.mediaplayer2.tests.SongItem;
+import com.desktop.duco.mediaplayer2.objects.SongItem;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.listeners.EventHook;
 
