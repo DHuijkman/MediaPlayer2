@@ -76,9 +76,9 @@ public class Controller {
         Map<String, AbstractTest> tests = new HashMap<>(); //make a hashmap with a string as key and an abstract class called AbstractTest
                                                            //all test classes will extend to this abstract class
 
-        tests.put("selectsong", new SelectSong());  //add your tests here
+        //tests.put("selectsong", new SelectSong());  //add your tests here
         //tests.put("nextplay", new NextPlay());
-        //tests.put("nosongs", new EmptyList());
+        tests.put("nosongs", new EmptyList());
 
 
         int k = 0; // simple counter
