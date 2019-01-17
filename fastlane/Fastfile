@@ -2,6 +2,8 @@ before_all do
   sh("cd .. && chmod a+x gradlew")
 end
 lane :tests do
+  gradle(task: "connectedAndroidTest")
+  gradle(task: 'assemble', build_type: 'debug')
   slack(slack_url: "https://hooks.slack.com/services/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",
         success: true)
 end

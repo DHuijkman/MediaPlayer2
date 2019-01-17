@@ -6,21 +6,21 @@ repositories {
 }
 
 android {
-    signingConfigs {
-        Rkey {
-            if(System.getenv()["CI"]){
-                storeFile file(System.getenv()["NC_KEYSTORE_PATH"])
-                storePassword System.getenv()["NC_KEYSTORE_PASSWORD"]
-                keyAlias System.getenv()["NC_KEY_ALIAS"]
-                keyPassword System.getenv()["NC_KEY_PASSWORD"]
-            } else {
-                storeFile file('C:/Users/Duco/keystores/MpK.jks')
-                storePassword 'DucoBouw7'
-                keyAlias 'mpKey'
-                keyPassword 'Ducoh19!'
-            }
-        }
-    }
+//    signingConfigs {
+//        Rkey {
+//            if(System.getenv()["CI"]){
+//                storeFile file(System.getenv()["NC_KEYSTORE_PATH"])
+//                storePassword System.getenv()["NC_KEYSTORE_PASSWORD"]
+//                keyAlias System.getenv()["NC_KEY_ALIAS"]
+//                keyPassword System.getenv()["NC_KEY_PASSWORD"]
+//            } else {
+//                storeFile file('C:/Users/Duco/keystores/MpK.jks')
+//                storePassword 'DucoBouw7'
+//                keyAlias 'mpKey'
+//                keyPassword 'Ducoh19!'
+//            }
+//        }
+//    }
 
     compileSdkVersion 28
     defaultConfig {
@@ -66,7 +66,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.Rkey
+//            signingConfig signingConfigs.Rkey
         }
     }
     compileOptions {
