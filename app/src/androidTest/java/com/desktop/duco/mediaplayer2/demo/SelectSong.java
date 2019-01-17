@@ -22,8 +22,9 @@ public class SelectSong  extends AbstractTest {
 
 
 
-    private int pause = 100;
+    private int pause = 1000;
     public void start(){
+        customSleep(pause);
         onView(allOf(ViewMatchers.withId(R.id.recycler_view), isDisplayed()))
                 .perform(RecyclerViewActions
                         .actionOnHolderItem(ScrollObjects.scrollSongs("Initial D - Deja Vu"),click()));

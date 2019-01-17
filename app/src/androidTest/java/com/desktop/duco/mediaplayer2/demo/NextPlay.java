@@ -20,8 +20,9 @@ import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsNot.not;
 
 public class NextPlay extends AbstractTest {
-    private int pause = 100;
+    private int pause = 1000;
     public void start() {
+        customSleep(pause);
         onView(allOf(withId(R.id.recycler_view),isDisplayed())).perform(RecyclerViewActions.actionOnHolderItem(
                 ScrollObjects.scrollSongs("Vigiland - Friday Night"),click()));
 

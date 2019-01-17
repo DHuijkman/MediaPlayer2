@@ -78,7 +78,7 @@ public class Controller {
 
         tests.put("selectsong", new SelectSong());  //add your tests here
         tests.put("nextplay", new NextPlay());
-        tests.put("nosongs", new EmptyList());
+        //tests.put("nosongs", new EmptyList());
 
 
         int k = 0; // simple counter
