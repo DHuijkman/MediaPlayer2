@@ -46,7 +46,7 @@ public class Controller {
 
     //This rule provides functional testing of a single Activity.
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class,true,true);
 
     @Before
     public void setup() {
