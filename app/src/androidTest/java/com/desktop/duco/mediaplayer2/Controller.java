@@ -77,7 +77,7 @@ public class Controller {
                                                            //all test classes will extend to this abstract class
 
         tests.put("selectsong", new SelectSong());  //add your tests here
-        tests.put("nextplay", new NextPlay());
+        //tests.put("nextplay", new NextPlay());
         //tests.put("nosongs", new EmptyList());
 
 
