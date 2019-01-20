@@ -24,7 +24,7 @@ public class NextPlay extends AbstractTest {
     public void start() {
         customSleep(pause);
         onView(allOf(withId(R.id.recycler_view),isDisplayed())).perform(RecyclerViewActions.actionOnHolderItem(
-                ScrollObjects.scrollSongs("Vigiland - Friday Night"),click()));
+                ScrollObjects.scrollSongs("George Ezra - Shotgun (Jesse Bloch Bootleg) [FREE DOWNLOAD]"),click()));
 
         onView(allOf(withId(R.id.pager), isDisplayed()))
                 .perform(swipeLeft());
@@ -33,14 +33,17 @@ public class NextPlay extends AbstractTest {
 
         onView(allOf(withId(R.id.btNxt),isDisplayed())).perform(click());
 
+        customSleep(pause);
 
         ViewInteraction appCompatImageView3 = onView(
                 allOf(withId(R.id.btPlay),isDisplayed()));
         appCompatImageView3.perform(click());
 
+        customSleep(pause);
+
         ViewInteraction appCompatImageView4 = onView(
                 allOf(withId(R.id.tvTitle) ,isDisplayed()));
-        appCompatImageView4.check(matches(not(withText("Sabaton - Man Of War"))));
+        appCompatImageView4.check(matches(not(withText("Spiderbait - Black Betty (Oh'Sabi! Bounce Betty Bootleg) [FREE DOWNLOAD]"))));
     }
 
     public void reset() {

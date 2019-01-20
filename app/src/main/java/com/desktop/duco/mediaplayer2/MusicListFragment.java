@@ -59,7 +59,7 @@ public class MusicListFragment extends Fragment implements SongItem.SimpleItemCl
         recyclerView = v.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new FastItemAdapter();
+        adapter = new FastItemAdapter<SongItem>();
         recyclerView.setAdapter(adapter);
 
         adapter.withEventHook((EventHook) new SongItem.ClickDelegate<>(new WeakReference<MusicListFragment>(this)));
@@ -81,12 +81,11 @@ public class MusicListFragment extends Fragment implements SongItem.SimpleItemCl
     @Override
     public void onSimpleItemClick(SongItem songItem, View v) {
         int position = 0;
-        if(lastClicked != null) {
-            position = adapter.getPosition(lastClicked);
-            lastClicked.shouldAnimate = false;
-            adapter.set(position,lastClicked);
+        List<SongItem> list = adapter.getAdapterItems();
+        for (SongItem song : list) {
+            song.shouldAnimate = false;
         }
-        lastClicked = songItem;
+        adapter.notifyAdapterDataSetChanged();
         position = adapter.getPosition(songItem);
         songItem.shouldAnimate = true;
         adapter.set(position, songItem);

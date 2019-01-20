@@ -27,11 +27,11 @@ public class SelectSong  extends AbstractTest {
         customSleep(pause);
         onView(allOf(ViewMatchers.withId(R.id.recycler_view), isDisplayed()))
                 .perform(RecyclerViewActions
-                        .actionOnHolderItem(ScrollObjects.scrollSongs("Initial D - Deja Vu"),click()));
+                        .actionOnHolderItem(ScrollObjects.scrollSongs("George Ezra - Shotgun (Jesse Bloch Bootleg) [FREE DOWNLOAD]"),click()));
         customSleep(pause);
         onView(allOf(withId(R.id.pager), isDisplayed())).perform(swipeLeft());
         customSleep(pause);
-        onView(allOf(withId(R.id.tvTitle), isDisplayed())).check(matches(withText("Initial D - Deja Vu")));
+        onView(allOf(withId(R.id.tvTitle), isDisplayed())).check(matches(withText("George Ezra - Shotgun (Jesse Bloch Bootleg) [FREE DOWNLOAD]")));
         customSleep(pause);
     }
 
